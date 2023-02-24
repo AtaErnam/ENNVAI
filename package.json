@@ -4,6 +4,8 @@
   "description": "Ennvai jewelery ecom website",
   "main": "app.js",
   "scripts": {
+    "start:dev": "nodemon server.js",
+    "start:prod": "NODE_ENV=production nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +21,7 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "mongoose": "^5.13.16",
     "morgan": "^1.10.0"
   }
 }

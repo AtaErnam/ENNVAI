@@ -1,0 +1,132 @@
+[
+    {
+        "ürünStili": "Zümrüt Baget Kolye",
+        "kod": {
+            "type": "kod",
+            "kod1": "DP218X",
+            "kod2": "E"
+        },
+        "id": 1,
+        "isim": "0.43 Karat Renkli Taş Kolye",
+        "GR": 2.80,
+        "orta": {
+            "type": "orta",
+            "CT": 0,
+            "ADET": 0,
+            "TAŞ": "-",
+            "SAFLIK": "-",
+            "BERRAKLIK": "-",
+            "ŞEKLİ": "-"
+        },
+        "kenar": {
+            "type": "kenar",
+            "CT": 0.16,
+            "ADET": 30,
+            "TAŞ": "Pırlanta",
+            "SAFLIK": "G-H",
+            "BERRAKLIK": "VS",
+            "ŞEKLİ": "Yuvarlak"
+        },
+        "kenarBaget": {
+            "type": "kenar baget",
+            "CT": 0,
+            "ADET": 0,
+            "TAŞ": "-",
+            "SAFLIK": "-",
+            "BERRAKLIK": "-",
+            "ŞEKLİ": "-"
+        },
+        "renkli": {
+            "type": "renkli",
+            "CT": 0.17,
+            "ADET": 16,
+            "TAŞ": "Zümrüt",
+            "RENK": "Yeşil",
+            "ŞEKLİ": "Yuvarlak"
+        },
+        "tlsatış": {
+            "type" : 0,
+            "KT_8" : 11933,
+            "KT_14": 14425,
+            "KT_18": 16056
+        },
+        "indirim": 0,
+        "resimler": {
+            "type":0,
+            "BEYAZ": "N24916XE_WG_1.JPG",
+            "KIRMIZI": "N24916XE_RG_1.JPG",
+            "SARI": "N24916XE_YG_1.JPG"
+        },
+        "outlet": {
+            "type" : 0,
+            "KT_8" : 0,
+            "KT_14": 0,
+            "KT_18": 0
+        }
+    },
+    {
+        "ürünStili": "Yakut Kolye",
+        "kod": {
+            "type": "kod",
+            "kod1": "DP218X",
+            "kod2": "R"
+        },
+        "id": 2,
+        "isim": "0.23 Karat Renkli Taş Kolye",
+        "GR": 2.00,
+        "orta": {
+            "type": "orta",
+            "CT": 0,
+            "ADET": 0,
+            "TAŞ": "-",
+            "SAFLIK": "-",
+            "BERRAKLIK": "-",
+            "ŞEKLİ": "-"
+        },
+        "kenar": {
+            "type": "kenar",
+            "CT": 0.13,
+            "ADET": 12,
+            "TAŞ": "Pırlanta",
+            "SAFLIK": "G-H",
+            "BERRAKLIK": "VS",
+            "ŞEKLİ": "Yuvarlak"
+        },
+        "kenarBaget": {
+            "type": "kenar baget",
+            "CT": 0,
+            "ADET": 0,
+            "TAŞ": "-",
+            "SAFLIK": "-",
+            "BERRAKLIK": "-",
+            "ŞEKLİ": "-"
+        },
+        "renkli": {
+            "type": "renkli",
+            "CT": 0.17,
+            "ADET": 16,
+            "TAŞ": "Yakut",
+            "RENK": "Kırmızı",
+            "ŞEKLİ": "Yuvarlak"
+        },
+        "tlsatış": {
+            "type" : 0,
+            "KT_8" : 4656,
+            "KT_14": 6307,
+            "KT_18": 7388
+        },
+        "indirim": 0,
+        "resimler": {
+            "type":0,
+            "BEYAZ": "DP218XR_WG_1.JPG",
+            "KIRMIZI": "DP218XR_RG_1.JPG",
+            "SARI": "DP218XR_YG_1.JPG"
+        },
+        "outlet": {
+            "type" : 0,
+            "KT_8" : 0,
+            "KT_14": 0,
+            "KT_18": 0
+        }
+    }
+]
