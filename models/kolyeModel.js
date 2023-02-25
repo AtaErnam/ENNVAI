@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const kolyeSchema = new mongoose.Schema({
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+    select: false,
+  },
   ürünStili: {
     type: String,
   },

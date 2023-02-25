@@ -3,9 +3,10 @@
 const Kolye = require("./../models/kolyeModel");
 const APIFeatures = require("./../utils/apiFeatures");
 
-exports.getAllTours = async (req, res) => {
+exports.getAllKolyes = async (req, res) => {
   try {
     // EXECUTE QUERY
+    console;
     const features = new APIFeatures(Kolye.find(), req.query)
       .filter()
       .sort()
@@ -18,7 +19,7 @@ exports.getAllTours = async (req, res) => {
       status: "success",
       results: kolyes.length,
       data: {
-        tours,
+        kolyes,
       },
     });
   } catch (err) {
@@ -30,7 +31,7 @@ exports.getAllTours = async (req, res) => {
   }
 };
 
-exports.getTour = async (req, res) => {
+exports.getKolye = async (req, res) => {
   try {
     const kolye = await Kolye.findById(req.params.id);
     // Tour.findOne({_id: req.params.id})
@@ -49,7 +50,7 @@ exports.getTour = async (req, res) => {
   }
 };
 
-exports.createTour = async (req, res) => {
+exports.createKolye = async (req, res) => {
   try {
     const newKolye = await Kolye.create(req.body);
 
@@ -67,7 +68,7 @@ exports.createTour = async (req, res) => {
   }
 };
 
-exports.updateTour = async (req, res) => {
+exports.updateKolye = async (req, res) => {
   try {
     const kolye = await Kolye.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -88,15 +89,16 @@ exports.updateTour = async (req, res) => {
   }
 };
 
-exports.deleteTour = async (req, res) => {
+exports.deleteKolye = async (req, res) => {
   try {
-    await kolye.findByIdAndDelete(req.params.id);
+    await Kolye.findByIdAndDelete(req.params.id);
 
     res.status(204).json({
       status: "success",
       data: null,
     });
   } catch (err) {
+    console.log(err)
     res.status(404).json({
       status: "fail",
       message: err,
