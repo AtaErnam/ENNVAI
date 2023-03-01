@@ -1,25 +1,25 @@
 /* eslint-disable prettier/prettier */
 
-const Product = require("./../models/productModel");
+const Category = require("./../models/categoryModel");
 const APIFeatures = require("./../utils/apiFeatures");
 
-exports.getAllProducts = async (req, res) => {
+exports.getAllCategorys = async (req, res) => {
   try {
     // EXECUTE QUERY
     console;
-    const features = new APIFeatures(Product.find(), req.query)
+    const features = new APIFeatures(Category.find(), req.query)
       .filter()
       .sort()
       .limitFields()
       .paginate();
-    const products = await features.query;
+    const categorys = await features.query;
 
     // SEND RESPONSE
     res.status(200).json({
       status: "success",
-      results: products.length,
+      results: categorys.length,
       data: {
-        products,
+        categorys,
       },
     });
   } catch (err) {
@@ -31,15 +31,15 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
-exports.getProduct = async (req, res) => {
+exports.getCategory = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const Category = await Category.findById(req.params.id);
     // Tour.findOne({_id: req.params.id})
 
     res.status(200).json({
       status: "success",
       data: {
-        product,
+        category,
       },
     });
   } catch (err) {
@@ -50,14 +50,14 @@ exports.getProduct = async (req, res) => {
   }
 };
 
-exports.createProduct = async (req, res) => {
+exports.createCategory = async (req, res) => {
   try {
-    const newProduct = await Product.create(req.body);
+    const newCategory = await Category.create(req.body);
 
     res.status(201).json({
       status: "success",
       data: {
-        product: newProduct,
+        category: newCategory,
       },
     });
   } catch (err) {
@@ -68,9 +68,9 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-exports.updateProduct = async (req, res) => {
+exports.updateCategory = async (req, res) => {
   try {
-    const Product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    const Category = await Category.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
@@ -78,7 +78,7 @@ exports.updateProduct = async (req, res) => {
     res.status(200).json({
       status: "success",
       data: {
-        Product: Product,
+        category: category,
       },
     });
   } catch (err) {
@@ -89,9 +89,9 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
-exports.deleteProduct = async (req, res) => {
+exports.deleteCategory = async (req, res) => {
   try {
-    await Product.findByIdAndDelete(req.params.id);
+    await Category.findByIdAndDelete(req.params.id);
 
     res.status(204).json({
       status: "success",

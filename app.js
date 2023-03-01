@@ -1,9 +1,11 @@
 const express = require("express");
 const morgan = require("morgan");
 
-// const customerRouter = require('./routes/customerRoutes');
-// const partnerRouter = require('./routes/partnerRoutes');
-// const productRouter = require('./routes/productRoutes');
+const globalErrorHandler = require("./controllers/errorController");
+const AppError = require("./utils/appError");
+const customerRouter = require("./routes/customerRoutes");
+const partnerRouter = require("./routes/partnerRoutes");
+const productRouter = require("./routes/productRoutes");
 
 const kolyeRouter = require("./routes/kolyeRoutes");
 
@@ -31,10 +33,16 @@ app.get("/", (req, res) => {
 });
 // 2) ROUTES
 
-// app.use('/api/v1/customers', customerRouter);
-// app.use('/api/v1/product', productRouter);
-// app.use('/api/v1/partner', partnerRouter);
+app.use("/api/v1/customers", customerRouter);
+app.use("/api/v1/product", productRouter);
+app.use("/api/v1/partner", partnerRouter);
 
 app.use("/api/v1/kolye", kolyeRouter);
+
+app.all("*", (req, res, next) => {
+  next(new AppError(`Cant find ${req.originalUrl} on this server!`, 404));
+});
+
+app.use(globalErrorHandler);
 
 module.exports = app;
