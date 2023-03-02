@@ -1,107 +1,84 @@
 /* eslint-disable prettier/prettier */
+const AppError = require("../utils/appError");
+const catchAsync = require("../utils/catchAsync");
 
 const Product = require("./../models/productModel");
 const APIFeatures = require("./../utils/apiFeatures");
 
-exports.getAllProducts = async (req, res) => {
-  try {
-    // EXECUTE QUERY
-    console;
-    const features = new APIFeatures(Product.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const products = await features.query;
+exports.getAllProduct = catchAsync(async (req, res) => {
+  const features = new APIFeatures(Product.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const product = await features.query;
 
-    // SEND RESPONSE
-    res.status(200).json({
-      status: "success",
-      results: products.length,
-      data: {
-        products,
-      },
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
+  // SEND RESPONSE
+  res.status(200).json({
+    status: "success",
+    results: product.length,
+    data: {
+      product,
+    },
+  });
+});
+
+exports.getProduct = catchAsync(async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  // Tour.findOne({_id: req.params.id})
+
+  if (!product) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
 
-exports.getProduct = async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    // Tour.findOne({_id: req.params.id})
+  res.status(200).json({
+    status: "success",
+    data: {
+      product,
+    },
+  });
+});
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        product,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
+exports.createProduct = catchAsync(async (req, res) => {
+  const product = await Product.create(req.body);
+
+  if (!product) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
 
-exports.createProduct = async (req, res) => {
-  try {
-    const newProduct = await Product.create(req.body);
+  res.status(201).json({
+    status: "success",
+    data: {
+      product: product,
+    },
+  });
+});
 
-    res.status(201).json({
-      status: "success",
-      data: {
-        product: newProduct,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: "Invalid data sent!",
-    });
+exports.updateProduct = catchAsync(async (req, res) => {
+  const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!product) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
 
-exports.updateProduct = async (req, res) => {
-  try {
-    const Product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+  res.status(200).json({
+    status: "success",
+    data: {
+      product: product,
+    },
+  });
+});
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        Product: Product,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
+exports.deleteProduct = catchAsync(async (req, res) => {
+  const product = await Product.findByIdAndDelete(req.params.id);
+  if (!product) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
-
-exports.deleteProduct = async (req, res) => {
-  try {
-    await Product.findByIdAndDelete(req.params.id);
-
-    res.status(204).json({
-      status: "success",
-      data: null,
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});

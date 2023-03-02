@@ -1,107 +1,81 @@
 /* eslint-disable prettier/prettier */
+const AppError = require("../utils/appError");
+const catchAsync = require("../utils/catchAsync");
 
 const Customer = require("./../models/customerModel");
 const APIFeatures = require("./../utils/apiFeatures");
 
-exports.getAllCustomers = async (req, res) => {
-  try {
-    // EXECUTE QUERY
-    console;
-    const features = new APIFeatures(Customer.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const customers = await features.query;
+exports.getAllCustomer = catchAsync(async (req, res) => {
+  const features = new APIFeatures(Customer.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const customer = await features.query;
 
-    // SEND RESPONSE
-    res.status(200).json({
-      status: "success",
-      results: customers.length,
-      data: {
-        customers,
-      },
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
+  // SEND RESPONSE
+  res.status(200).json({
+    status: "success",
+    results: customer.length,
+    data: {
+      customer,
+    },
+  });
+});
+
+exports.getCustomer = catchAsync(async (req, res) => {
+  const customer = await Customer.findById(req.params.id);
+  // Tour.findOne({_id: req.params.id})
+  if (!tour) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
 
-exports.getCustomer = async (req, res) => {
-  try {
-    const customer = await Customer.findById(req.params.id);
-    // Tour.findOne({_id: req.params.id})
+  res.status(200).json({
+    status: "success",
+    data: {
+      customer,
+    },
+  });
+});
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        customer,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
+exports.createCustomer = catchAsync(async (req, res) => {
+  const customer = await Customer.create(req.body);
+  if (!customer) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
 
-exports.createCustomer = async (req, res) => {
-  try {
-    const newCustomer = await Customer.create(req.body);
+  res.status(201).json({
+    status: "success",
+    data: {
+      customer: customer,
+    },
+  });
+});
 
-    res.status(201).json({
-      status: "success",
-      data: {
-        customer: newCustomer,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: "Invalid data sent!",
-    });
+exports.updateCustomer = catchAsync(async (req, res) => {
+  const customer = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  if (!customer) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
 
-exports.updateCustomer = async (req, res) => {
-  try {
-    const customer = await Customer.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+  res.status(200).json({
+    status: "success",
+    data: {
+      customer: customer,
+    },
+  });
+});
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        customer: customer,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
+exports.deleteCustomer = catchAsync(async (req, res) => {
+  const customer = await customer.findByIdAndDelete(req.params.id);
+  if (!customer) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
-
-exports.deleteCustomer = async (req, res) => {
-  try {
-    await customer.findByIdAndDelete(req.params.id);
-
-    res.status(204).json({
-      status: "success",
-      data: null,
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});

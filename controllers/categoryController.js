@@ -1,107 +1,84 @@
 /* eslint-disable prettier/prettier */
+const AppError = require("../utils/appError");
+const catchAsync = require("../utils/catchAsync");
 
 const Category = require("./../models/categoryModel");
 const APIFeatures = require("./../utils/apiFeatures");
 
-exports.getAllCategorys = async (req, res) => {
-  try {
-    // EXECUTE QUERY
-    console;
-    const features = new APIFeatures(Category.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const categorys = await features.query;
+exports.getAllCategory = catchAsync(async (req, res) => {
+  const features = new APIFeatures(Category.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const categorys = await features.query;
 
-    // SEND RESPONSE
-    res.status(200).json({
-      status: "success",
-      results: categorys.length,
-      data: {
-        categorys,
-      },
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
+  // SEND RESPONSE
+  res.status(200).json({
+    status: "success",
+    results: category.length,
+    data: {
+      category,
+    },
+  });
+});
+
+exports.getCategory = catchAsync(async (req, res) => {
+  const category = await Category.findById(req.params.id);
+  // Tour.findOne({_id: req.params.id})
+
+  if (!category) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
 
-exports.getCategory = async (req, res) => {
-  try {
-    const Category = await Category.findById(req.params.id);
-    // Tour.findOne({_id: req.params.id})
+  res.status(200).json({
+    status: "success",
+    data: {
+      category,
+    },
+  });
+});
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        category,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
+exports.createCategory = catchAsync(async (req, res) => {
+  const category = await Category.create(req.body);
+
+  if (!category) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
 
-exports.createCategory = async (req, res) => {
-  try {
-    const newCategory = await Category.create(req.body);
+  res.status(201).json({
+    status: "success",
+    data: {
+      category: category,
+    },
+  });
+});
 
-    res.status(201).json({
-      status: "success",
-      data: {
-        category: newCategory,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: "Invalid data sent!",
-    });
+exports.updateCategory = catchAsync(async (req, res) => {
+  const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!category) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
 
-exports.updateCategory = async (req, res) => {
-  try {
-    const Category = await Category.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+  res.status(200).json({
+    status: "success",
+    data: {
+      category: category,
+    },
+  });
+});
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        category: category,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
+exports.deleteCategory = catchAsync(async (req, res) => {
+  const category = await Category.findByIdAndDelete(req.params.id);
+  if (!category) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
-
-exports.deleteCategory = async (req, res) => {
-  try {
-    await Category.findByIdAndDelete(req.params.id);
-
-    res.status(204).json({
-      status: "success",
-      data: null,
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});

@@ -1,107 +1,84 @@
 /* eslint-disable prettier/prettier */
+const AppError = require("../utils/appError");
+const catchAsync = require("../utils/catchAsync");
 
 const Partner = require("./../models/partnerModel");
 const APIFeatures = require("./../utils/apiFeatures");
 
-exports.getAllPartners = async (req, res) => {
-  try {
-    // EXECUTE QUERY
-    console;
-    const features = new APIFeatures(Partner.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const partners = await features.query;
+exports.getAllPartner = catchAsync(async (req, res) => {
+  const features = new APIFeatures(Partner.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const partner = await features.query;
 
-    // SEND RESPONSE
-    res.status(200).json({
-      status: "success",
-      results: partners.length,
-      data: {
-        partners,
-      },
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
+  // SEND RESPONSE
+  res.status(200).json({
+    status: "success",
+    results: partner.length,
+    data: {
+      partner,
+    },
+  });
+});
+
+exports.getPartner = catchAsync(async (req, res) => {
+  const partner = await Partner.findById(req.params.id);
+  // Tour.findOne({_id: req.params.id})
+
+  if (!partner) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
 
-exports.getPartner = async (req, res) => {
-  try {
-    const partner = await Partner.findById(req.params.id);
-    // Tour.findOne({_id: req.params.id})
+  res.status(200).json({
+    status: "success",
+    data: {
+      partner,
+    },
+  });
+});
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        partner,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
+exports.createPartner = catchAsync(async (req, res) => {
+  const partner = await partner.create(req.body);
+
+  if (!partner) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
 
-exports.createPartner = async (req, res) => {
-  try {
-    const newPartner = await Partner.create(req.body);
+  res.status(201).json({
+    status: "success",
+    data: {
+      partner: partner,
+    },
+  });
+});
 
-    res.status(201).json({
-      status: "success",
-      data: {
-        partner: newPartner,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: "Invalid data sent!",
-    });
+exports.updatePartner = catchAsync(async (req, res) => {
+  const partner = await Partner.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!partner) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
 
-exports.updatePartner = async (req, res) => {
-  try {
-    const partner = await Partner.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+  res.status(200).json({
+    status: "success",
+    data: {
+      partner: partner,
+    },
+  });
+});
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        partner: partner,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
+exports.deletePartner = catchAsync(async (req, res) => {
+  const partner = await Partner.findByIdAndDelete(req.params.id);
+  if (!partner) {
+    return next(new AppError("No tour found with that ID", 404));
   }
-};
-
-exports.deletePartner = async (req, res) => {
-  try {
-    await Partner.findByIdAndDelete(req.params.id);
-
-    res.status(204).json({
-      status: "success",
-      data: null,
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});

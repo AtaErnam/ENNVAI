@@ -1,107 +1,70 @@
-/* eslint-disable prettier/prettier */
+// /* eslint-disable prettier/prettier */
+// const AppError = require("../utils/appError");
+// const catchAsync = require("../utils/catchAsync");
 
-const Kolye = require("./../models/kolyeModel");
-const APIFeatures = require("./../utils/apiFeatures");
+// const Kolye = require("./../models/kolyeModel");
+// const APIFeatures = require("./../utils/apiFeatures");
 
-exports.getAllKolyes = async (req, res) => {
-  try {
-    // EXECUTE QUERY
-    console;
-    const features = new APIFeatures(Kolye.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const kolyes = await features.query;
+// exports.getAllKolyes = catchAsync(async (req, res) => {
+//   const features = new APIFeatures(Kolye.find(), req.query)
+//     .filter()
+//     .sort()
+//     .limitFields()
+//     .paginate();
+//   const kolyes = await features.query;
 
-    // SEND RESPONSE
-    res.status(200).json({
-      status: "success",
-      results: kolyes.length,
-      data: {
-        kolyes,
-      },
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+//   // SEND RESPONSE
+//   res.status(200).json({
+//     status: "success",
+//     results: kolyes.length,
+//     data: {
+//       kolyes,
+//     },
+//   });
+// });
 
-exports.getKolye = async (req, res) => {
-  try {
-    const kolye = await Kolye.findById(req.params.id);
-    // Tour.findOne({_id: req.params.id})
+// exports.getKolye = catchAsync(async (req, res) => {
+//   const kolye = await Kolye.findById(req.params.id);
+//   // Tour.findOne({_id: req.params.id})
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        kolye,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+//   res.status(200).json({
+//     status: "success",
+//     data: {
+//       kolye,
+//     },
+//   });
+// });
 
-exports.createKolye = async (req, res) => {
-  try {
-    const newKolye = await Kolye.create(req.body);
+// exports.createKolye = catchAsync(async (req, res) => {
+//   const newKolye = await Kolye.create(req.body);
 
-    res.status(201).json({
-      status: "success",
-      data: {
-        kolye: newKolye,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: "Invalid data sent!",
-    });
-  }
-};
+//   res.status(201).json({
+//     status: "success",
+//     data: {
+//       kolye: newKolye,
+//     },
+//   });
+// });
 
-exports.updateKolye = async (req, res) => {
-  try {
-    const kolye = await Kolye.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+// exports.updateKolye = catchAsync(async (req, res) => {
+//   const kolye = await Kolye.findByIdAndUpdate(req.params.id, req.body, {
+//     new: true,
+//     runValidators: true,
+//   });
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        kolye: kolye,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+//   res.status(200).json({
+//     status: "success",
+//     data: {
+//       kolye: kolye,
+//     },
+//   });
+// });
 
-exports.deleteKolye = async (req, res) => {
-  try {
-    await Kolye.findByIdAndDelete(req.params.id);
+// exports.deleteKolye = catchAsync(async (req, res) => {
+//   await Kolye.findByIdAndDelete(req.params.id);
 
-    res.status(204).json({
-      status: "success",
-      data: null,
-    });
-  } catch (err) {
-    console.log(err)
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+//   res.status(204).json({
+//     status: "success",
+//     data: null,
+//   });
+// });

@@ -5,7 +5,7 @@ const customerRouter = express.Router();
 
 customerRouter
   .route("/")
-  .get(customerController.getAllCustomers)
+  .get(customerController.getAllCustomer)
   .post(customerController.createCustomer);
 
 customerRouter

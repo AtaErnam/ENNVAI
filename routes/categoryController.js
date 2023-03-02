@@ -5,7 +5,7 @@ const categoryRouter = express.Router();
 
 categoryRouter
   .route("/")
-  .get(categoryController.getAllCategorys)
+  .get(categoryController.getAllCategory)
   .post(categoryController.createCategory);
 
 categoryRouter
