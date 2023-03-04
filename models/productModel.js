@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
     select: false,
   },
   productName: String,
-  optionType: String,
+  options: String,
 });
 
 const Product = mongoose.model("product", productSchema);
