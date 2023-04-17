@@ -1,17 +1,28 @@
 const express = require("express");
 const productController = require("../controllers/productController");
+const authController = require("../controllers/authController");
 
-const productRouter = express.Router();
+const productRouter = express.Router({ mergeParams: true });
 
 productRouter
   .route("/")
-  .get(productController.getAllProduct)
-  .post(productController.createProduct);
+  .get(productController.getAllProducts)
+  .post(
+    authController.restrictTo("admin", "partner"),
+    productController.setTourUserIds,
+    productController.createProduct
+  );
 
 productRouter
   .route("/:id")
   .get(productController.getProduct)
-  .patch(productController.updateProduct)
-  .delete(productController.deleteProduct);
+  .patch(
+    authController.restrictTo("admin", "partner"),
+    productController.updateProduct
+  )
+  .delete(
+    authController.restrictTo("admin", "partner"),
+    productController.deleteProduct
+  );
 
 module.exports = productRouter;

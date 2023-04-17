@@ -1,11 +1,26 @@
 /* eslint-disable prettier/prettier */
-const AppError = require("../utils/appError");
-const catchAsync = require("../utils/catchAsync");
 
 const Product = require("./../models/productModel");
-const APIFeatures = require("./../utils/apiFeatures");
+const factory = require("./handlerFactory");
 
-exports.getAllProduct = catchAsync(async (req, res) => {
+exports.getAllProducts = factory.getAll(Product);
+
+exports.setTourUserIds = (req, res, next) => {
+  // Allow nested routes
+  if (!req.body.tour) req.body.tour = req.params.tourId;
+  req.body.user = req.user.id;
+  next();
+};
+
+exports.getProduct = factory.getOne(Product);
+
+exports.createProduct = factory.createOne(Product);
+
+exports.updateProduct = factory.updateOne(Product);
+
+exports.deleteProduct = factory.deleteOne(Product);
+
+/* exports.getAllProduct = catchAsync(async (req, res) => {
   const features = new APIFeatures(Product.find(), req.query)
     .filter()
     .sort()
@@ -81,4 +96,4 @@ exports.deleteProduct = catchAsync(async (req, res) => {
     status: "success",
     data: null,
   });
-});
+}); */

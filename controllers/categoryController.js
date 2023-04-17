@@ -1,11 +1,14 @@
 /* eslint-disable prettier/prettier */
-const AppError = require("../utils/appError");
-const catchAsync = require("../utils/catchAsync");
-
 const Category = require("./../models/categoryModel");
-const APIFeatures = require("./../utils/apiFeatures");
+const factory = require("./handlerFactory");
 
-exports.getAllCategory = catchAsync(async (req, res) => {
+exports.getAllCategorys = factory.getAll(Category);
+exports.getCategory = factory.getOne(Category, { path: "products" });
+exports.createCategory = factory.createOne(Category);
+exports.updateCategory = factory.updateOne(Category);
+exports.deleteCategory = factory.deleteOne(Category);
+
+/* exports.getAllCategory = catchAsync(async (req, res) => {
   const features = new APIFeatures(Category.find(), req.query)
     .filter()
     .sort()
@@ -81,4 +84,4 @@ exports.deleteCategory = catchAsync(async (req, res) => {
     status: "success",
     data: null,
   });
-});
+}); */
