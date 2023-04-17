@@ -8,7 +8,6 @@ const optionSchema = new mongoose.Schema({
   },
   optionName: String,
   GR: Number,
-
   stones: [
     {
       isMiddle: Boolean,

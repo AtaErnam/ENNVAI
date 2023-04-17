@@ -7,9 +7,9 @@ process.on("uncaughtException", (err) => {
   const errmsgStart = fullMessage.indexOf("errmsg:") + 8; // Find errmsg inside message
   const errmsgStop = fullMessage.indexOf(",", errmsgStart); // Find first comma after that
   const errmsgLen = errmsgStop - errmsgStart;
-  //const errorText = fullMessage.substr(errmsgStart, errmsgLen);
+  const errorText = fullMessage
   console.log(err.name);
-  //console.log(errorText);
+  console.log(errorText);
   console.log("UNCAUGHT REJECTION!!!");
   process.exit(1);
 });

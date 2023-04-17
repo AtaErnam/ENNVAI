@@ -3,7 +3,7 @@ const morgan = require("morgan");
 
 const globalErrorHandler = require("./controllers/errorController");
 const AppError = require("./utils/appError");
-const customerRouter = require("./routes/customerRoutes");
+const userRouter = require("./routes/userRoutes");
 const partnerRouter = require("./routes/partnerRoutes");
 const productRouter = require("./routes/productRoutes");
 
@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 });
 // 2) ROUTES
 
-app.use("/api/v1/customers", customerRouter);
+app.use("/api/v1/users", userRouter);
 app.use("/api/v1/product", productRouter);
 app.use("/api/v1/partner", partnerRouter);
 

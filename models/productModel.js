@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Category = require("./categoryModel");
 const Option = require("./optionModel");
 
 const productSchema = new mongoose.Schema({
@@ -8,6 +9,9 @@ const productSchema = new mongoose.Schema({
     select: false,
   },
   productName: String,
+  categoryName: {
+    type: String,
+  },
   options: {
     type: mongoose.Schema.ObjectId,
     ref: Option,
@@ -28,6 +32,20 @@ const productSchema = new mongoose.Schema({
     red: String,
     yellow: String,
   },
+  category: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Category",
+    required: [true, "Product must belong to a category"],
+  },
+});
+
+productSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "category",
+    select: "categoryName",
+  });
+
+  next();
 });
 
 const Product = mongoose.model("product", productSchema);
