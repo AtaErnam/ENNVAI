@@ -6,11 +6,28 @@ const optionSchema = new mongoose.Schema({
     default: Date.now(),
     select: false,
   },
-  optionName: String,
-  GR: Number,
+  GR: {
+    type: Number,
+  },
+  WAX_GR: {
+    type: Number,
+  },
+  setting: {
+    type: String,
+  },
+  productStyle: {
+    type: String,
+  },
+  quantity_of_stones: {
+    type: Integer,
+  },
   stones: [
     {
-      isMiddle: Boolean,
+      stone_type: {
+        type: String,
+        enum: ["middle", "corner", "colorful"],
+        default: "middle",
+      },
       carat: Number,
       amount: Number,
       stone: String,
@@ -19,15 +36,23 @@ const optionSchema = new mongoose.Schema({
       shape: String,
     },
   ],
-  colorful: [
+  silver_setting: {
+    type: Number,
+  },
+  gold_type: [
     {
-      carat: Number,
-      amount: Number,
-      stone: String,
-      color: String,
-      shape: String,
+      type: String,
+      enum: ["White", "Rose", "Normal"],
     },
   ],
+});
+
+optionSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "product",
+  });
+
+  next();
 });
 
 const Option = mongoose.model("option", optionSchema);

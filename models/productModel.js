@@ -16,7 +16,7 @@ const productSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: Option,
     },
-    tl_sales: {
+    usd_sales: {
       KT_8: Number,
       KT_14: Number,
       KT_18: Number,
@@ -27,11 +27,6 @@ const productSchema = new mongoose.Schema(
         type: String,
       },
     ],
-    colors: {
-      white: String,
-      red: String,
-      yellow: String,
-    },
     category: {
       type: mongoose.Schema.ObjectId,
       ref: "Category",
@@ -43,6 +38,13 @@ const productSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+// Virtual Populate
+categorySchema.virtual("options", {
+  ref: "Option",
+  foreignField: "product",
+  localField: "_id",
+});
 
 productSchema.pre(/^find/, function (next) {
   this.populate({
