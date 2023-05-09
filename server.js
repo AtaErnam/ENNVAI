@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
-process.on("uncaughtException", (err) => {
+/* process.on("uncaughtException", (err) => {
   const fullMessage = err.message;
   const errmsgStart = fullMessage.indexOf("errmsg:") + 8; // Find errmsg inside message
   const errmsgStop = fullMessage.indexOf(",", errmsgStart); // Find first comma after that
@@ -12,7 +12,7 @@ process.on("uncaughtException", (err) => {
   console.log(errorText);
   console.log("UNCAUGHT REJECTION!!!");
   process.exit(1);
-});
+}); */
 
 dotenv.config({ path: "./config.env" });
 const app = require("./app");
@@ -35,7 +35,7 @@ const server = app.listen(port, () => {
   console.log("HELOO");
 });
 
-process.on("unhandledRejection", (err) => {
+/* process.on("unhandledRejection", (err) => {
   const fullMessage = err.message;
   const errmsgStart = fullMessage.indexOf("errmsg:") + 8; // Find errmsg inside message
   const errmsgStop = fullMessage.indexOf(",", errmsgStart); // Find first comma after that
@@ -47,4 +47,4 @@ process.on("unhandledRejection", (err) => {
   server.close(() => {
     process.exit(1);
   });
-});
+}); */

@@ -19,7 +19,7 @@ const optionSchema = new mongoose.Schema({
     type: String,
   },
   quantity_of_stones: {
-    type: Integer,
+    type: Number,
   },
   stones: [
     {

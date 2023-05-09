@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Category = require("./categoryModel");
 const Option = require("./optionModel");
 
 const productSchema = new mongoose.Schema(
@@ -40,11 +41,7 @@ const productSchema = new mongoose.Schema(
 );
 
 // Virtual Populate
-categorySchema.virtual("options", {
-  ref: "Option",
-  foreignField: "product",
-  localField: "_id",
-});
+
 
 productSchema.pre(/^find/, function (next) {
   this.populate({
