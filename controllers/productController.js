@@ -2,8 +2,9 @@
 
 const Product = require("./../models/productModel");
 const factory = require("./handlerFactory");
+const APIFeatures = require("./../utils/apiFeatures");
 
-exports.getAllProducts = factory.getAll(Product);
+//exports.getAllProducts = factory.getAll(Product);
 
 exports.setTourUserIds = (req, res, next) => {
   // Allow nested routes
@@ -12,15 +13,15 @@ exports.setTourUserIds = (req, res, next) => {
   next();
 };
 
-exports.getProduct = factory.getOne(Product);
+/* exports.getProduct = factory.getOne(Product);
 
 exports.createProduct = factory.createOne(Product);
 
 exports.updateProduct = factory.updateOne(Product);
 
-exports.deleteProduct = factory.deleteOne(Product);
+exports.deleteProduct = factory.deleteOne(Product); */
 
-/* exports.getAllProduct = catchAsync(async (req, res) => {
+exports.getAllProducts = catchAsync(async (req, res) => {
   const features = new APIFeatures(Product.find(), req.query)
     .filter()
     .sort()
@@ -96,4 +97,4 @@ exports.deleteProduct = catchAsync(async (req, res) => {
     status: "success",
     data: null,
   });
-}); */
+});
