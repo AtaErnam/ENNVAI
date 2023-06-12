@@ -9,6 +9,7 @@ const productSchema = new mongoose.Schema(
       default: Date.now(),
       select: false,
     },
+    
     productName: String,
     categoryName: {
       type: String,
