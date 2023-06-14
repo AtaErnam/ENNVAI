@@ -1,6 +1,9 @@
 /* eslint-disable prettier/prettier */
-const Category = require("./../models/categoryModel");
+const AppError = require("../utils/appError");
+const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
+
+const Category = require("./../models/categoryModel");
 const APIFeatures = require("./../utils/apiFeatures");
 
 /* exports.getAllCategorys = factory.getAll(Category);
@@ -15,7 +18,7 @@ exports.getAllCategory = catchAsync(async (req, res) => {
     .sort()
     .limitFields()
     .paginate();
-  const categorys = await features.query;
+  const category = await features.query;
 
   // SEND RESPONSE
   res.status(200).json({
@@ -27,7 +30,7 @@ exports.getAllCategory = catchAsync(async (req, res) => {
   });
 });
 
-exports.getCategory = catchAsync(async (req, res) => {
+exports.getCategory = catchAsync(async (req, res, next) => {
   const category = await Category.findById(req.params.id);
   // Tour.findOne({_id: req.params.id})
 

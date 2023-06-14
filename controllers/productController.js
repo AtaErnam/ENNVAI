@@ -6,13 +6,6 @@ const APIFeatures = require("./../utils/apiFeatures");
 
 //exports.getAllProducts = factory.getAll(Product);
 
-exports.setTourUserIds = (req, res, next) => {
-  // Allow nested routes
-  if (!req.body.tour) req.body.tour = req.params.tourId;
-  req.body.user = req.user.id;
-  next();
-};
-
 /* exports.getProduct = factory.getOne(Product);
 
 exports.createProduct = factory.createOne(Product);
@@ -21,7 +14,7 @@ exports.updateProduct = factory.updateOne(Product);
 
 exports.deleteProduct = factory.deleteOne(Product); */
 
-exports.getAllProducts = catchAsync(async (req, res) => {
+exports.getAllProducts = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(Product.find(), req.query)
     .filter()
     .sort()
@@ -39,7 +32,7 @@ exports.getAllProducts = catchAsync(async (req, res) => {
   });
 });
 
-exports.getProduct = catchAsync(async (req, res) => {
+exports.getProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   // Tour.findOne({_id: req.params.id})
 
@@ -55,7 +48,7 @@ exports.getProduct = catchAsync(async (req, res) => {
   });
 });
 
-exports.createProduct = catchAsync(async (req, res) => {
+exports.createProduct = catchAsync(async (req, res, next) => {
   const product = await Product.create(req.body);
 
   if (!product) {
@@ -70,7 +63,7 @@ exports.createProduct = catchAsync(async (req, res) => {
   });
 });
 
-exports.updateProduct = catchAsync(async (req, res) => {
+exports.updateProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,

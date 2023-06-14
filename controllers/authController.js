@@ -3,10 +3,10 @@
 const crypto = require("crypto");
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
-const User = require("./../models/userModel");
-const catchAsync = require("./../utils/catchAsync");
-const AppError = require("./../utils/appError");
-const sendEmail = require("./../utils/email");
+const User = require("../models/userModel");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
+const sendEmail = require("../utils/email");
 
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -47,6 +47,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   //   passwordChangedAt: req.body.passwordChangedAt,
   //   role: req.body.role,
   // });
+
   const newUser = await User.create(req.body);
   createSendToken(newUser, 201, res);
 });
@@ -61,7 +62,7 @@ exports.login = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email }).select("+password");
 
   if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError("Incorrect email or password", 401));
+    return next(new AppError("Incorrerect email or password", 401));
   }
 
   // 3) If everything ok, send token to client
@@ -92,6 +93,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   // 2) Validate token
+  console.log(token);
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
   //console.log(decoded);
 
@@ -119,8 +121,10 @@ exports.protect = catchAsync(async (req, res, next) => {
 exports.restrictTo =
   (...roles) =>
   (req, res, next) => {
-    //roles
+    // roles ['admin', 'lead-guide']. role='user'
+    console.log(req.user);
     if (!roles.includes(req.user.role)) {
+      console.log(req.user);
       return next(
         new AppError("You do not have permission to perform this action", 403)
       );
