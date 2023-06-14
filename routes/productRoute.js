@@ -1,22 +1,22 @@
 const express = require("express");
 const productController = require("../controllers/productController");
 const authController = require("../controllers/authController");
-//const reviewRouter = require("./reviewRoute");
+const reviewRouter = require("./reviewRoute");
 const userRouter = require("./userRoute");
 
 const productRouter = express.Router();
 
 //productRouter.use("/:productId/reviews", reviewRouter);
 
-/* productRouter
+productRouter
   .route("/discountProduct/:id")
   .patch(
     authController.protect,
     authController.restrictTo("sales_manager", "admin"),
     productController.discountProduct
-  ); */
+  );
 
-/* productRouter
+productRouter
   .route("/addToWishlist/:id")
   .patch(
     authController.protect,
@@ -29,11 +29,11 @@ productRouter
     authController.protect,
     authController.restrictTo("customer", "admin"),
     productController.removeProductFromWishlist
-  ); */
+  );
 
 productRouter
   .route("/")
-  .get(productController.getAllProducts)
+  .get(productController.getAllProduct)
   .post(
     authController.protect,
     authController.restrictTo("customer", "product_manager", "admin"),
