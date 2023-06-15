@@ -9,15 +9,7 @@ const productSchema = new mongoose.Schema(
       default: Date.now(),
       select: false,
     },
-    
     productName: String,
-    categoryName: {
-      type: String,
-    },
-    options: {
-      type: mongoose.Schema.ObjectId,
-      ref: Option,
-    },
     usd_sales: {
       KT_8: Number,
       KT_14: Number,
@@ -42,7 +34,6 @@ const productSchema = new mongoose.Schema(
 );
 
 // Virtual Populate
-
 
 productSchema.pre(/^find/, function (next) {
   this.populate({
