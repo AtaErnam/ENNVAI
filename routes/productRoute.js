@@ -46,6 +46,8 @@ productRouter
   .patch(
     authController.protect,
     authController.restrictTo("sales_manager", "product_manager", "admin"),
+    productController.uploadProductImages,
+    productController.resizeProductImages,
     productController.updateProduct
   )
   .delete(
