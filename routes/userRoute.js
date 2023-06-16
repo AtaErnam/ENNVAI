@@ -1,7 +1,10 @@
 /* eslint-disable prettier/prettier */
 const express = require("express");
+const multer = require("multer");
 const userController = require("../controllers/userController");
 const authController = require("../controllers/authController");
+
+const upload = multer({ dest: "public/img/users" });
 
 const userRouter = express.Router();
 
@@ -16,7 +19,7 @@ userRouter.use(authController.protect);
 userRouter.patch("/updateMyPassword", authController.updatePassword);
 
 userRouter.get("/me", userController.getMe, userController.getUser);
-userRouter.patch("/updateMe", userController.updateMe);
+userRouter.patch("/updateMe", upload.single('photo'),userController.updateMe);
 userRouter.delete("/deleteMe", userController.deleteMe);
 
 userRouter.use(authController.restrictTo("admin"));
