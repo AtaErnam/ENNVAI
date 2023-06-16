@@ -19,6 +19,8 @@ categoryRouter
   .patch(
     authController.protect,
     authController.restrictTo("product_manager", "admin"),
+    categoryController.uploadCategoryImages,
+    categoryController.resizeCategoryImages,
     categoryController.updateCategory
   )
   .delete(
