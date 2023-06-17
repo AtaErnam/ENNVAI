@@ -9,6 +9,16 @@ const categorySchema = new mongoose.Schema(
       select: false,
     },
     categoryName: String,
+    imageCover: {
+      type: String,
+      required: [true, "A tour must have a cover image"],
+    },
+    images: [String],
+    category: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Category",
+      required: [true, "Product must belong to a category"],
+    },
   },
   {
     toJSON: { virtuals: true },
