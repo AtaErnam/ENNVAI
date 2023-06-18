@@ -1,3 +1,4 @@
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
@@ -6,6 +7,39 @@ const APIFeatures = require("./../utils/apiFeatures");
 const User = require("../models/userModel");
 const OrderItem = require("../models/orderItemModel");
 const Order = require("../models/orderModel");
+
+exports.getCheckoutSession = catchAsync(async (req, res, next) => {
+  // 1) Get the currently selected order
+  const order = await Order.findById(req.params.orderID);
+
+  // 2) Create checkout session
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    success_url: `${req.protocol}://${req.get("host")}/?order=${
+      req.params.orderID
+    }&user=${req.user.id}&price=${order.totalPrice}`,
+    cancel_url: `${req.protocol}://${req.get("host")}/order/`,
+    customer_email: req.user.email,
+    client_reference_id: req.params.orderId,
+  });
+
+  // 3) Create session as response
+  res.status(200).json({
+    status: "success",
+    session,
+  });
+});
+
+exports.createOrderCheckout = catchAsync( async (req, res, next) => {
+  // TEMPORARY, UNSECURE
+  const { orderItems, user, totalPrice } = req.query;
+
+  if (!orderItems && !user && !price) return next();
+  await Order.create({orderItems, user, price})
+
+  res.redirect(req.originalUrl.split('?')[0])
+
+});
 
 exports.getAllOrders = catchAsync(async (req, res) => {
   const orderList = await Order.find()

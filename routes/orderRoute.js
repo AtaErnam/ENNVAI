@@ -9,6 +9,12 @@ const router = express.Router();
 
 router.use(authController.protect);
 
+router.get(
+    '/checkout-session/:orderID',
+    authController.protect,
+    orderController.getCheckoutSession
+  )
+
 router
   .route("/")
   .get(orderController.getAllOrders)
