@@ -9,11 +9,9 @@ const router = express.Router();
 
 router.use(authController.protect);
 
-router.get(
-    '/checkout-session/:orderID',
-    authController.protect,
-    orderController.getCheckoutSession
-  )
+router.use(authController.restrictTo("admin", "partner"));
+
+router.get("/checkout-session/:orderID", orderController.getCheckoutSession);
 
 router
   .route("/")

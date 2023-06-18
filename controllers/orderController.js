@@ -30,16 +30,32 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createOrderCheckout = catchAsync( async (req, res, next) => {
-  // TEMPORARY, UNSECURE
-  const { orderItems, user, totalPrice } = req.query;
+const createBookingCheckout = async (session) => {
+  const order = session.client_reference_id;
+  const user = (await User.findOne({ email: session.customer_email })).id;
+  const price = session.display_items[0].amount / 100;
+  await Order.create({ order, user, price });
+};
 
-  if (!orderItems && !user && !price) return next();
-  await Order.create({orderItems, user, price})
+exports.webhookCheckout = (req, res, next) => {
+  const signature = req.headers["stripe-signature"];
 
-  res.redirect(req.originalUrl.split('?')[0])
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch (err) {
+    return res.status(400).send(`Webhook error: ${err.message}`);
+  }
 
-});
+  if (event.type === "checkout.session.completed")
+    createBookingCheckout(event.data.object);
+
+  res.status(200).json({ received: true });
+};
 
 exports.getAllOrders = catchAsync(async (req, res) => {
   const orderList = await Order.find()
