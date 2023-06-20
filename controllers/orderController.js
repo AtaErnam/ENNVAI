@@ -65,18 +65,23 @@ exports.createOrder = catchAsync(async (req, res, next) => {
 
   const totalPrices = await Promise.all(
     orderItemsIdsResolved.map(async (orderItemId) => {
+      console.log("BRUH");
       const orderItem = await OrderItem.findById({ _id: orderItemId }).populate(
         "product",
         "price"
       );
-      console.log(orderItem.product);
+      console.log(orderItem.product.price);
       const totalPrice = orderItem.product.price * orderItem.quantity;
+      console.log(totalPrice);
       return totalPrice;
     })
   );
+  console.log("BRUH1");
 
   const totalQuantities = await Promise.all(
     orderItemsIdsResolved.map(async (orderItemId) => {
+      console.log("BRUH2");
+
       const orderItem = await OrderItem.findById(orderItemId).populate(
         "product",
         "quantity"
