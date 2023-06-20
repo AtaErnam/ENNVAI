@@ -10,17 +10,24 @@ const productSchema = new mongoose.Schema(
       select: false,
     },
     productName: String,
+    categoryName: {
+      type: String,
+    },
+    options: {
+      type: mongoose.Schema.ObjectId,
+      ref: Option,
+    },
     usd_sales: {
       KT_8: Number,
       KT_14: Number,
       KT_18: Number,
     },
     comission: Number,
-    imageCover: {
-      type: String,
-      required: [true, "A tour must have a cover image"],
-    },
-    images: [String],
+    photos: [
+      {
+        type: String,
+      },
+    ],
     category: {
       type: mongoose.Schema.ObjectId,
       ref: "Category",
@@ -34,6 +41,7 @@ const productSchema = new mongoose.Schema(
 );
 
 // Virtual Populate
+
 
 productSchema.pre(/^find/, function (next) {
   this.populate({
