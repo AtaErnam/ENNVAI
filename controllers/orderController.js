@@ -5,17 +5,23 @@ const OrderItem = require("../models/orderItemModel");
 const Order = require("../models/orderModel");
 
 exports.getAllOrders = catchAsync(async (req, res) => {
-  const orderList = await Order.find()
+  const order = await Order.find()
     .populate("user", "name")
     .sort({ dateOrdered: -1 });
 
-  if (!orderList) {
-    res.status(500).json({ success: false });
+  if (!order) {
+    return next(new AppError("No document found with that ID", 404));
   }
-  res.send(orderList);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      data: order,
+    },
+  });
 });
 
-exports.getOrder = catchAsync(async (req, res) => {
+exports.getOrder = catchAsync(async (req, res, next) => {
   const order = await Order.findById(req.params.id)
     .populate("user", "name")
     .populate({
@@ -27,7 +33,13 @@ exports.getOrder = catchAsync(async (req, res) => {
     });
 
   if (!order) {
-    res.status(500).json({ success: false });
+    return next(new AppError("No document found with that ID", 404));
   }
-  res.send(order);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      data: order,
+    },
+  });
 });
