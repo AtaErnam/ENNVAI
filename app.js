@@ -14,8 +14,8 @@ const categoryRouter = require("./routes/categoryRoute");
 const productRouter = require("./routes/productRoute");
 //const reviewRouter = require("./routes/reviewRoute");
 const orderRouter = require("./routes/orderRoute");
-const orderItemRouter = require("./routes/orderItemRoute");
-const optionRouter = require("./routes/optionRoute");
+//const orderItemRouter = require("./routes/orderItemRoute");
+//const optionRouter = require("./routes/optionRoute");
 
 const kolyeRouter = require("./routes/kolyeRoute");
 
@@ -87,7 +87,7 @@ app.use("/api/v1/product", productRouter);
 app.use("/api/v1/category", categoryRouter);
 //app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/orders", orderRouter);
-app.use("/api/v1/orderItems", orderItemRouter);
+//app.use("/api/v1/orderItems", orderItemRouter);
 //app.use("/api/v1/refund", refundRouter);
 app.use("/api/v1/option", optionRouter);
 
