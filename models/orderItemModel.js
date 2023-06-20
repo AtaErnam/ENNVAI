@@ -9,6 +9,10 @@ const orderItemSchema = mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "Product",
   },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+  },
   dateOrdered: {
     type: Date,
     default: Date.now(),
@@ -23,7 +27,7 @@ orderItemSchema.pre(/^find/, function (next) {
     path: "user",
     select: "name photo",
   });
-  
+
   next();
 });
 
