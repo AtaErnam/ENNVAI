@@ -89,7 +89,7 @@ app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/orders", orderRouter);
 //app.use("/api/v1/orderItems", orderItemRouter);
 //app.use("/api/v1/refund", refundRouter);
-app.use("/api/v1/option", optionRouter);
+//app.use("/api/v1/option", optionRouter);
 
 app.use("/api/v1/kolye", kolyeRouter);
 

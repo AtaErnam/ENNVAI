@@ -9,3 +9,5 @@ router.use(authController.protect);
 router.route("/").get(orderController.getAllOrders);
 
 router.route("/:id").get(orderController.getOrder);
+
+module.exports = router;
