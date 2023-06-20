@@ -52,7 +52,6 @@ exports.createOrder = catchAsync(async (req, res, next) => {
       let newOrderItem = new OrderItem({
         quantity: orderItem.quantity,
         product: orderItem.product,
-        user: req.user,
       });
 
       newOrderItem = await newOrderItem.save();
