@@ -2,11 +2,14 @@ const mongoose = require("mongoose");
 
 const orderSchema = mongoose.Schema(
   {
-    orderItems: [
+    Items: [
       {
-        type: mongoose.Schema.ObjectId,
-        ref: "OrderItem",
-        required: true,
+        quantity: Number,
+        product: {
+          type: mongoose.Schema.ObjectId,
+          ref: "Category",
+          required: [true, "Product must belong to a category"],
+        },
       },
     ],
     address: {
