@@ -12,7 +12,7 @@ productRouter
   .route("/discountProduct/:id")
   .patch(
     authController.protect,
-    authController.restrictTo("sales_manager", "admin"),
+    authController.restrictTo("partner", "admin"),
     productController.discountProduct
   );
 
@@ -36,7 +36,7 @@ productRouter
   .get(productController.getAllProduct)
   .post(
     authController.protect,
-    authController.restrictTo("customer", "product_manager", "admin"),
+    authController.restrictTo("customer", "partner", "admin"),
     productController.createProduct
   );
 
@@ -45,14 +45,14 @@ productRouter
   .get(productController.getProduct)
   .patch(
     authController.protect,
-    authController.restrictTo("sales_manager", "product_manager", "admin"),
+    authController.restrictTo("partner", "admin"),
     productController.uploadProductImages,
     productController.resizeProductImages,
     productController.updateProduct
   )
   .delete(
     authController.protect,
-    authController.restrictTo("product_manager", "admin"),
+    authController.restrictTo("partner", "admin"),
     productController.deleteProduct
   );
 

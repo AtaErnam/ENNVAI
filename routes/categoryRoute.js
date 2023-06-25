@@ -9,7 +9,7 @@ categoryRouter
   .get(categoryController.getAllCategory)
   .post(
     authController.protect,
-    authController.restrictTo("product_manager", "admin"),
+    authController.restrictTo("admin"),
     categoryController.createCategory
   );
 
@@ -18,14 +18,14 @@ categoryRouter
   .get(categoryController.getCategory)
   .patch(
     authController.protect,
-    authController.restrictTo("product_manager", "admin"),
+    authController.restrictTo("admin"),
     categoryController.uploadCategoryImages,
     categoryController.resizeCategoryImages,
     categoryController.updateCategory
   )
   .delete(
     authController.protect,
-    authController.restrictTo("product_manager", "admin"),
+    authController.restrictTo("admin"),
     categoryController.deleteCategory
   );
 
