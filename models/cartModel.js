@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const orderSchema = mongoose.Schema(
+const cartSchema = mongoose.Schema(
   {
-    Items: [
+    items: [
       {
         quantity: Number,
         product: {
@@ -53,6 +53,18 @@ const orderSchema = mongoose.Schema(
 const Order = mongoose.model("Order", orderSchema);
 
 module.exports = Order;
+
+/* cartSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "product",
+    select: "productName price",
+  }).populate({
+    path: "user",
+    select: "name photo",
+  });
+
+  next();
+}); */
 
 /**
 Order Example:
