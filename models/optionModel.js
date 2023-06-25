@@ -7,11 +7,6 @@ const optionSchema = new mongoose.Schema(
       default: Date.now(),
       select: false,
     },
-    product: {
-      type: mongoose.Schema.ObjectId,
-      ref: "product",
-      required: [true, "Option must belong to a product."],
-    },
     GR: {
       type: Number,
     },

@@ -26,6 +26,11 @@ const productSchema = new mongoose.Schema(
       ref: "Category",
       required: [true, "Product must belong to a category"],
     },
+    option: {
+      type: mongoose.Schema.ObjectId,
+      ref: "option",
+      required: [true, "Option must belong to a product."],
+    },
   },
   {
     toJSON: { virtuals: true },
