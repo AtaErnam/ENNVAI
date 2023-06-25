@@ -46,11 +46,11 @@ exports.getCart = catchAsync(async (req, res, next) => {
 exports.createCart = catchAsync(async (req, res, next) => {
   let stock_error = false;
 
-  const orderItemsIds = Promise.all(
-    req.body.orderItems.map(async (orderItem) => {
-      let newOrderItem = new OrderItem({
-        quantity: orderItem.quantity,
-        product: orderItem.product,
+  const ItemsIds = Promise.all(
+    req.body.Items.map(async (Item) => {
+      let newItem = new Item({
+        quantity: Item.quantity,
+        product: Item.product,
       });
 
       newOrderItem = await newOrderItem.save();
