@@ -1,49 +1,49 @@
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const Product = require("../models/productModel");
-const Order = require("../models/cartModel");
+const Cart = require("../models/cartModel");
 
-exports.getAllOrders = catchAsync(async (req, res) => {
-  const order = await Order.find()
+exports.getAllCarts = catchAsync(async (req, res) => {
+  const cart = await Cart.find()
     .populate("user", "name")
     .sort({ dateOrdered: -1 });
 
-  if (!order) {
+  if (!cart) {
     return next(new AppError("No document found with that ID", 404));
   }
 
   res.status(200).json({
     status: "success",
     data: {
-      data: order,
+      data: cart,
     },
   });
 });
 
-exports.getOrder = catchAsync(async (req, res, next) => {
-  const order = await Order.findById(req.params.id)
+exports.getCart = catchAsync(async (req, res, next) => {
+  const cart = await Cart.findById(req.params.id)
     .populate("user", "name")
     .populate({
-      path: "orderItems",
+      path: "Items",
       populate: {
         path: "product",
         populate: "category",
       },
     });
 
-  if (!order) {
+  if (!cart) {
     return next(new AppError("No document found with that ID", 404));
   }
 
   res.status(200).json({
     status: "success",
     data: {
-      data: order,
+      data: cart,
     },
   });
 });
 
-exports.createOrder = catchAsync(async (req, res, next) => {
+exports.createCart = catchAsync(async (req, res, next) => {
   let stock_error = false;
 
   const orderItemsIds = Promise.all(
