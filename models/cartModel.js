@@ -50,9 +50,9 @@ const cartSchema = mongoose.Schema(
   }
 );
 
-const Order = mongoose.model("Order", orderSchema);
+const Cart = mongoose.model("Cart", cartSchema);
 
-module.exports = Order;
+module.exports = Cart;
 
 /* cartSchema.pre(/^find/, function (next) {
   this.populate({

@@ -1,7 +1,6 @@
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
-const Product = require("./../models/productModel");
-const OrderItem = require("../models/orderItemModel");
+const Product = require("../models/productModel");
 const Order = require("../models/cartModel");
 
 exports.getAllOrders = catchAsync(async (req, res) => {
