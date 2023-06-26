@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 
 const cartSchema = mongoose.Schema(
   {
-    Items: [
+    items: [
       {
         quantity: Number,
         product: {
           type: mongoose.Schema.ObjectId,
-          ref: "Category",
-          required: [true, "Product must belong to a category"],
+          ref: "Product",
+          required: [true, "Items must have a product"],
         },
       },
     ],
@@ -20,14 +20,14 @@ const cartSchema = mongoose.Schema(
     status: {
       type: String,
       required: true,
-      enum: ["Pending", "Purchased"],
-      default: "Pending",
+      enum: ["pending", "purchased"],
+      default: "pending",
     },
     deliveryStatus: {
       type: String,
       required: true,
-      enum: ["Processing", "In-Transit", "Delivered"],
-      default: "Processing",
+      enum: ["processing", "inTransit", "delivered"],
+      default: "processing",
     },
     totalPrice: {
       type: Number,
