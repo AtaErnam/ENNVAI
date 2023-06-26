@@ -47,25 +47,25 @@ exports.createCart = catchAsync(async (req, res, next) => {
   let stock_error = false;
 
   const ItemsIds = Promise.all(
-    req.body.Items.map(async (Item) => {
+    req.body.items.map(async (Item) => {
       let newItem = new Item({
         quantity: Item.quantity,
         product: Item.product,
       });
 
-      newOrderItem = await newOrderItem.save();
-      return newOrderItem._id;
+      Item = await Item.save();
+      return Item._id;
     })
   );
 
-  console.log(typeof orderItemsIds);
+  console.log(typeof ItemsIds);
 
-  const orderItemsIdsResolved = await orderItemsIds;
+  const ItemsIdsResolved = await ItemsIds;
 
   const totalPrices = await Promise.all(
-    orderItemsIdsResolved.map(async (orderItemId) => {
+    ItemsIdsResolved.map(async (ItemId) => {
       console.log("BRUH");
-      const orderItem = await OrderItem.findById({ _id: orderItemId }).populate(
+      const Item = await Item.findById({ _id: ItemId }).populate(
         "product",
         "price"
       );
