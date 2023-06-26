@@ -21,6 +21,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "default.jpg",
   },
+  address: [
+    {
+      phone: String,
+      zipcode: String,
+      city: String,
+      countryCode: String,
+      country: String,
+      addressDetails: String,
+    },
+  ],
   role: {
     type: String,
     enum: ["user", "partner", "admin"],
