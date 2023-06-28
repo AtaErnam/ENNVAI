@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema(
       select: false,
     },
     productName: String,
+    description: String,
     usd_sales: {
       KT_8: Number,
       KT_14: Number,

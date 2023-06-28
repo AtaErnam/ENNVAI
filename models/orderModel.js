@@ -4,15 +4,56 @@ const orderSchema = mongoose.Schema(
   {
     orderItems: [
       {
-        type: mongoose.Schema.ObjectId,
-        ref: "OrderItem",
-        required: true,
+        qty: { type: Number, required: true, default: 0 },
+        name: { type: String, required: true },
+        price: { type: Number, required: true, default: 0 },
+        image: { type: String, required: true },
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: "Product",
+        },
       },
     ],
-    address: {
+    shippingAddress: {
+      address: { type: String, required: true },
+      city: { type: String, required: true },
+      postalCode: { type: String, required: true },
+      country: { type: String, required: true },
+    },
+    paymentMethod: {
       type: String,
       required: true,
-      default: "My home",
+    },
+    // depends on if stripe or paypal method is used
+    paymentResult: {
+      id: { type: String },
+      status: { type: String },
+      update_time: { type: String },
+      email_address: { type: String },
+    },
+    taxPrice: {
+      type: Number,
+      required: true,
+      default: 0.0,
+    },
+    shippingPrice: {
+      type: Number,
+      required: true,
+      default: 0.0,
+    },
+    totalPrice: {
+      type: Number,
+      required: true,
+      default: 0.0,
+    },
+    totalQuantity: {
+      type: Number,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
     status: {
       type: String,
@@ -26,19 +67,12 @@ const orderSchema = mongoose.Schema(
       enum: ["Processing", "In-Transit", "Delivered"],
       default: "Processing",
     },
-    totalPrice: {
-      type: Number,
-    },
-    totalQuantity: {
-      type: Number,
-    },
-    user: {
-      type: mongoose.Schema.ObjectId,
-      ref: "User",
-    },
     dateOrdered: {
       type: Date,
       default: Date.now(),
+    },
+    deliveredAt: {
+      type: Date,
     },
   },
   {
